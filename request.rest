@@ -1,0 +1,31 @@
+###Get all the posts
+GET http://localhost:3000/posts
+
+###
+
+###Get all the posts relating to an sender
+GET http://localhost:3000/posts?sender=Jason
+
+###Get specific post by its ID
+
+GET http://localhost:3000/posts/674acd01c4f0dfb4e8ddddd9
+
+###Create a post
+
+POST http://localhost:3000/posts
+Content-Type: application/json
+
+{
+    "title": "Hello",
+    "sender": "Jason",
+    "content": "Blabla"
+}
+
+###Update a post based on its ID
+
+PUT http://localhost:3000/posts/674acd01c4f0dfb4e8ddddd9
+Content-Type: application/json
+
+{
+    "content": "Blabla was adjusted!"
+}
