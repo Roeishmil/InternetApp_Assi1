@@ -1,0 +1,34 @@
+###READ all the comments
+GET http://localhost:3000/comments
+
+###READ all the comments by a post_id
+GET http://localhost:3000/comments?post_id=6745eca3894d9e4731c3f424 
+
+###Get specific comment by its ID
+
+GET http://localhost:3000/comments/674ad8d1ad9bd9e05bacdbc1
+
+
+###Delete comment by id
+DELETE http://localhost:3000/comments/674ad8d1ad9bd9e05bacdbc1
+
+###Create a Comment
+
+POST http://localhost:3000/comments
+Content-Type: application/json
+
+{
+    "post_id": "6745eca3894d9e4731c3f424",
+    "title": "MyComment",
+    "sender": "Jason",
+    "content": "Blabla"
+}
+
+###Update a post based on its ID
+
+PUT http://localhost:3000/comments/674ad8d1ad9bd9e05bacdbc1
+Content-Type: application/json
+
+{
+    "content": "Comment was adjusted!"
+}
