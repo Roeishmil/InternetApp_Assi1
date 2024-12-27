@@ -1,6 +1,6 @@
-const PostModel = require("../models/posts_model");
+import PostModel from"../models/posts_model";
 
-const getAllPosts = async (req, res) => {
+const getAllPosts = async (req:any, res:any) => {
   const filter = req.query.sender;
   try {
     if (filter) {
@@ -10,12 +10,12 @@ const getAllPosts = async (req, res) => {
       const posts = await PostModel.find();
       res.send(posts);
     }
-  } catch (error) {
+  } catch (error:any) {
     res.status(400).send(error.message);
   }
 };
 
-const getPostById = async (req, res) => {
+const getPostById = async (req:any, res:any) => {
   const postId = req.params.id;
 
   try {
@@ -25,22 +25,22 @@ const getPostById = async (req, res) => {
     } else {
       res.status(404).send("Post not found");
     }
-  } catch (error) {
+  } catch (error:any) {
     res.status(400).send(error.message);
   }
 };
 
-const createAPost = async (req, res) => {
+const createAPost = async (req:any, res:any) => {
   const postBody = req.body;
   try {
     const post = await PostModel.create(postBody);
     res.status(201).send(post);
-  } catch (error) {
+  } catch (error:any) {
     res.status(400).send(error.message);
   }
 };
 
-const updatePostByID = async (req, res) => {
+const updatePostByID = async (req:any, res:any) => {
     const postId = req.params.id; //Get the id from the json
     const postBody = req.body;
     try {
@@ -50,12 +50,12 @@ const updatePostByID = async (req, res) => {
         } else {
           res.status(404).send("Post not found");
         }
-      } catch (error) {
+      } catch (error:any) {
         res.status(400).send(error.message);
       }
 };
 
-module.exports = {
+export default {
   getAllPosts,
   createAPost,
   updatePostByID,
