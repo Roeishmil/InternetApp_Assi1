@@ -1,3 +1,34 @@
+#####################################Users CRUD###############################
+###Create a user
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "username": "Eldar",
+    "email": "eldar@king.com",
+    "password": "RoeiIsLove"
+}
+
+###Get specific user by its username
+
+GET http://localhost:3000/users/Eldar
+
+
+###Delete user by its username
+DELETE http://localhost:3000/users/Tom
+
+
+###Update a user email by its username
+
+PUT http://localhost:3000/users/Eldar
+Content-Type: application/json
+
+{
+    "content": "pip@kaki.com"
+}
+
+#####################################Comments CRUD###############################
 ###READ all the comments
 GET http://localhost:3000/comments
 

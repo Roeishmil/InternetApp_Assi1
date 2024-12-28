@@ -30,6 +30,13 @@ app.use("/posts", postsRoute);
 import commentsRoute from "./routes/comments_route";
 app.use("/comments", commentsRoute);
 
+import usersRoute from "./routes/users_route";
+app.use("/users", usersRoute);
+
+import authRoutes from './routes/auth_route';
+app.use('/auth', authRoutes);
+
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
