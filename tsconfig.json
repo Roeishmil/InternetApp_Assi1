@@ -1,8 +1,13 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",   // Use CommonJS modules, which is what Node.js uses
-    "target": "ESNext",     // Use the latest ECMAScript version
-    "esModuleInterop": true, // For compatibility with commonjs modules
-    "skipLibCheck": true
-  }
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": true,
+    "resolveJsonModule": true
+  },
+  "lib": ["es2015"]
 }

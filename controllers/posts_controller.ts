@@ -1,63 +1,43 @@
-import PostModel from"../models/posts_model";
+import postModel, { Ipost } from "../models/posts_model";
+import { Request, Response } from "express";
+import BaseController from "./base_controller";
 
-const getAllPosts = async (req:any, res:any) => {
-  const filter = req.query.sender;
-  try {
-    if (filter) {
-      const posts = await PostModel.find({ sender: filter });
-      res.send(posts);
-    } else {
-      const posts = await PostModel.find();
-      res.send(posts);
+class PostsController extends BaseController<Ipost> {
+    constructor() {
+        super(postModel);
     }
-  } catch (error:any) {
-    res.status(400).send(error.message);
-  }
-};
 
-const getPostById = async (req:any, res:any) => {
-  const postId = req.params.id;
-
-  try {
-    const post = await PostModel.findById(postId);
-    if (post) {
-      res.send(post);
-    } else {
-      res.status(404).send("Post not found");
-    }
-  } catch (error:any) {
-    res.status(400).send(error.message);
-  }
-};
-
-const createAPost = async (req:any, res:any) => {
-  const postBody = req.body;
-  try {
-    const post = await PostModel.create(postBody);
-    res.status(201).send(post);
-  } catch (error:any) {
-    res.status(400).send(error.message);
-  }
-};
-
-const updatePostByID = async (req:any, res:any) => {
-    const postId = req.params.id; //Get the id from the json
-    const postBody = req.body;
-    try {
-        const post = await PostModel.updateOne({_id : postId} , {$set: {content:postBody.content}});
-        if (post) {
-          res.send(post);
-        } else {
-          res.status(404).send("Post not found");
+    async create(req: Request, res: Response) {
+        const userId = req.body.owner;
+        const post = {
+            ...req.body,
+            owner: userId
         }
-      } catch (error:any) {
-        res.status(400).send(error.message);
-      }
-};
+        req.body = post;
+        super.create(req, res);
+    };
 
-export default {
-  getAllPosts,
-  createAPost,
-  updatePostByID,
-  getPostById,
-};
+    async getAll(req: Request, res: Response) {
+      try {
+          const posts = await postModel.find();
+          res.status(200).json(posts);
+      } catch (error) {
+          res.status(500).json({ message: 'Server Error' });
+      }
+  };
+  
+    async getById(req: Request, res: Response) {
+        super.getById(req, res);
+    };
+
+    async deleteItem(req: Request, res: Response) {
+        super.deleteItem(req, res);
+        };
+
+    async updateItem(req: Request, res: Response) {
+        super.updateItem(req, res);
+    };
+}
+
+
+export default new PostsController();
