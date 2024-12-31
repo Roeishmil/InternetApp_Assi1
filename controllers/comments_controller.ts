@@ -1,79 +1,70 @@
-import commentModel from "../models/comments_model";
+import commentsModel, { IComments } from "../models/comments_model";
+import { Request, Response } from "express";
+import BaseController from "./base_controller";
 
-const getAllComments = async (req:any, res:any) => {
-  const filter = req.query.post_id;
-  try {
-    if (filter) {
-      const comments = await commentModel.find({ post_id: filter });
-      res.send(comments);
-    } else {
-      const comments = await commentModel.find();
-      res.send(comments);
+class CommentsController extends BaseController<IComments> {
+    constructor() {
+        super(commentsModel);
     }
-  } catch (error:any) {
-    res.status(400).send(error.message);
-  }
-};
 
-const getCommentById = async (req:any, res:any) => {
-  const commentId = req.params.id;
-
-  try {
-    const comment = await commentModel.findById(commentId);
-    if (comment) {
-      res.send(comment);
-    } else {
-      res.status(404).send("comment not found");
-    }
-  } catch (error:any) {
-    res.status(400).send(error.message);
-  }
-};
-
-const createAComment = async (req:any, res:any) => {
-  const commentBody = req.body;
-  try {
-    const comment = await commentModel.create(commentBody);
-    res.status(201).send(comment);
-  } catch (error:any) {
-    res.status(400).send(error.message);
-  }
-};
-
-const updateCommentByID = async (req:any, res:any) => {
-    const commentId = req.params.id; //Get the id from the json
-    const commentBody = req.body;
-    try {
-        const comment = await commentModel.updateOne({_id : commentId} , {$set: {content:commentBody.content}});
-        if (comment) {
-          res.send(comment);
-        } else {
-          res.status(404).send("comment not found");
+    async create(req: Request, res: Response) {
+        const userId = req.body.owner;
+        const comment = {
+            ...req.body,
+            owner: userId
         }
-      } catch (error:any) {
-        res.status(400).send(error.message);
-      }
-};
+        req.body = comment;
+        console.log(req.body);
+        super.create(req, res);
+    };
 
-const deleteCommentByID = async (req:any, res:any) => {
-  const commentId = req.params.id; //Get the id from the json
-  try {
-      const comment = await commentModel.deleteOne({_id : commentId});
-      if (comment) {
-        res.send(comment);
-      } else {
-        res.status(404).send("comment not found");
-      }
-    } catch (error:any) {
-      res.status(400).send(error.message);
-    }
-};
+    async getAll(req: Request, res: Response) {
+        try {
+            const comments = await commentsModel.find();
+            res.status(200).json(comments);
+        } catch (error) {
+            res.status(500).json({ message: 'Server Error' });
+        }
+    };
 
+    async getById(req: Request, res: Response) {
+        super.getById(req, res);
+    };
 
-export default {
-  getAllComments,
-  createAComment,
-  updateCommentByID,
-  getCommentById,
-  deleteCommentByID,
-};
+    async deleteItem(req: Request, res: Response) {
+        super.deleteItem(req, res);
+    };
+
+    async updateItem(req: Request, res: Response) {
+        super.updateItem(req, res);
+    };
+}
+
+export default new CommentsController();
+// const commentsController = new BaseController<IComments>(commentsModel);
+
+// commentsController.create = async (req: Request, res: Response) => {
+//     const userId = req.params.userId;
+//     const comment = {
+//         ...req.body,
+//         owner: userId
+//     }
+//     req.body = comment;
+//     commentsController.create(req, res);
+// };
+
+// commentsController.getAll = async (req: Request, res: Response) => {
+//     commentsController.getAll(req, res);
+// };
+
+// commentsController.getById = async (req: Request, res: Response) => {
+//     commentsController.getById(req, res);
+// }
+
+// commentsController.deleteItem = async (req: Request, res: Response) => {
+//     commentsController.deleteItem(req, res);
+// }
+
+// commentsController.updateItem = async (req: Request, res: Response) => {
+//     commentsController.updateItem(req, res);
+// }
