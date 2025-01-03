@@ -6,6 +6,7 @@ import express, { Express } from "express";
 import postsRoute from "./routes/posts_route";
 import commentsRoute from "./routes/comments_route";
 import authRoutes from "./routes/auth_route";
+import usersRoute from "./routes/users_route";
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUI from "swagger-ui-express";
 
@@ -15,6 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/posts", postsRoute);
 app.use("/comments", commentsRoute);
 app.use("/auth", authRoutes);
+app.use("/users", usersRoute);
+
 
 const options = {
   definition: {
@@ -26,7 +29,7 @@ const options = {
     },
     servers: [{ url: "http://localhost:3000", },],
   },
-  apis: ["./src/routes/*.ts"],
+  apis: ["./routes/*.ts"],
 };
 const specs = swaggerJsDoc(options);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
