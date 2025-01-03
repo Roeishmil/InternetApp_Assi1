@@ -14,7 +14,6 @@ class CommentsController extends BaseController<IComments> {
             owner: userId
         }
         req.body = comment;
-        console.log(req.body);
         super.create(req, res);
     };
 
@@ -41,30 +40,3 @@ class CommentsController extends BaseController<IComments> {
 }
 
 export default new CommentsController();
-// const commentsController = new BaseController<IComments>(commentsModel);
-
-// commentsController.create = async (req: Request, res: Response) => {
-//     const userId = req.params.userId;
-//     const comment = {
-//         ...req.body,
-//         owner: userId
-//     }
-//     req.body = comment;
-//     commentsController.create(req, res);
-// };
-
-// commentsController.getAll = async (req: Request, res: Response) => {
-//     commentsController.getAll(req, res);
-// };
-
-// commentsController.getById = async (req: Request, res: Response) => {
-//     commentsController.getById(req, res);
-// }
-
-// commentsController.deleteItem = async (req: Request, res: Response) => {
-//     commentsController.deleteItem(req, res);
-// }
-
-// commentsController.updateItem = async (req: Request, res: Response) => {
-//     commentsController.updateItem(req, res);
-// }
